@@ -4,6 +4,7 @@ import com.example.todoproject.constant.Role;
 import com.example.todoproject.domain.User;
 import com.example.todoproject.repository.UserRepository;
 import com.example.todoproject.request.CreateUserDto;
+import com.example.todoproject.response.UserResponse;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +36,6 @@ public class UserServiceTest {
                 .userId("test1")
                 .password("testpassword")
                 .name("test1")
-                .role(Role.USER)
                 .build();
 
         //when
@@ -46,5 +46,26 @@ public class UserServiceTest {
         User user = userRepository.findAll().get(0);
         assertEquals("test1", user.getUserId());
         assertEquals("test1", user.getName());
+    }
+
+    @Test
+    @DisplayName("유저 아이디로 가져오기")
+    void findById() {
+        //given
+        User requestUser = User.builder()
+                .userId("test1")
+                .password("testpassword")
+                .name("test1")
+                .role(Role.USER)
+                .build();
+
+        userRepository.save(requestUser);
+
+        //when
+        UserResponse user = userService.get(requestUser.getId());
+
+        //then
+        assertNotNull(user);
+        assertEquals("test1", user.getUserId());
     }
 }

@@ -17,14 +17,10 @@ public class CreateUserDto {
     private String password;
 
     private String name;
-
-    private Role role;
-
     @Builder
-    public CreateUserDto(String userId, String password, String name, Role role) {
+    public CreateUserDto(String userId, String password, String name) {
         this.userId = userId;
         this.password = password;
         this.name = name;
-        this.role = role;
     }
 }
